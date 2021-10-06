@@ -1,4 +1,22 @@
-### Taxonomy of motion planning techniques applied in automated driving scenarios
+# Planning Algorithm
+## 1. How to Use
+### 1.1 Environment config
+Ubuntu20.04(recommend) or Ubunt18.04<br>
+[Install OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(OpenCV4 recommend)
+
+### 1.2 Build program
+```
+mkdir build
+cd build
+cmake ..
+make -j10
+./path_planning
+```
+### 1.3 Supplementary Instruction
+The rightward direction is the positive direction of the X-axis<br>
+The downward direction is the positive direction of the Y-axis.
+
+## 2. Taxonomy of motion planning techniques applied in automated driving scenarios
 <table>
     <tr>
         <td>Algorithm group</td>
@@ -74,3 +92,23 @@
         </td>
     </tr>
 </table>
+
+## 3. A* Algorithm
+### 3.1 pseudocode
+**Input**: A graph<br>
+**Output**: A path between start and goal nodes<br>
+**repeat**<br>
+　Pick $n_{best}$ from $O$ such that $f(n_{best}) \leq f(n)$, $\forall n \in O$.<br>
+　Remove $n_{best}$ from $O$ and add to C.<br>
+　If $n_{best} =  q{goal}$, EXIT.<br>
+　Expand $n_{best}$: for all $x \in Star(n{best})$ that are not in C.<br>
+　**if** $x \notin O$ **then**<br>
+　　add $x$ to $O$.<br>
+　**else if** $g(n{best})$ + c(n{best}, x) < g(x)$ **then**<br>
+　　update $x$'s backpointer to point to $n{best}$]<br>
+　**end if**<br>
+**util** $O$ is empty.<br>
+
+### 3.2 pseudocode explain
+$O$ is a priority queue.<br>
+$C$ is a set of Node which has been searched.
