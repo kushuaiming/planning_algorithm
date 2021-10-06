@@ -46,12 +46,14 @@ void Star(Node* n, std::vector<Node*>& adjacent_nodes) {
   if (IsCoordinateValid(x - 1, y - 1)) {
     Node* upper_left_node = map.mutable_node(x - 1, y - 1);
     // 1.4 is the square of 2.
-    *(upper_left_node->mutable_path_length_cost()) = n->path_length_cost() + 1.4;
+    *(upper_left_node->mutable_path_length_cost()) =
+        n->path_length_cost() + 1.4;
     adjacent_nodes.push_back(upper_left_node);
   }
   if (IsCoordinateValid(x + 1, y - 1)) {
     Node* upper_right_node = map.mutable_node(x + 1, y - 1);
-    *(upper_right_node->mutable_path_length_cost()) = n->path_length_cost() + 1.4;
+    *(upper_right_node->mutable_path_length_cost()) =
+        n->path_length_cost() + 1.4;
     adjacent_nodes.push_back(upper_right_node);
   }
   if (IsCoordinateValid(x - 1, y + 1)) {
@@ -61,7 +63,8 @@ void Star(Node* n, std::vector<Node*>& adjacent_nodes) {
   }
   if (IsCoordinateValid(x + 1, y + 1)) {
     Node* down_right_node = map.mutable_node(x + 1, y + 1);
-    *(down_right_node->mutable_path_length_cost()) = n->path_length_cost() + 1.4;
+    *(down_right_node->mutable_path_length_cost()) =
+        n->path_length_cost() + 1.4;
     adjacent_nodes.push_back(down_right_node);
   }
   return;
@@ -97,6 +100,8 @@ void AddObstacles() {
 bool AStarAlgorithm() {
   Node* start_node = map.mutable_node(10, 40);
   Node* goal_node = map.mutable_node(40, 10);
+  map.DrawNode(*start_node, cv::Scalar(0, 0, 255));
+  map.DrawNode(*goal_node, cv::Scalar(255, 0, 0));
 
   CalculateHeuristicCost(goal_node);
 
@@ -123,10 +128,18 @@ bool AStarAlgorithm() {
         continue;
       O.push(adjacent_node);
       adjacent_node->set_pre_node(n_best);
-      map.DrawNode(*adjacent_node);
+      map.DrawNode(*adjacent_node, cv::Scalar(0, 255, 0), 1);
       cv::imshow("a_star", map.background());
       cv::waitKey(5);
     }
+  }
+
+  const Node* path_node = goal_node;
+  while (path_node != start_node) {
+    map.DrawNode(*path_node, cv::Scalar(0, 0, 0));
+    path_node = path_node->pre_node();
+    cv::imshow("a_star", map.background());
+    cv::waitKey(5);
   }
 
   return true;
