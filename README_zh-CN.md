@@ -1,10 +1,10 @@
-# Planning Algorithm
-## 1. How to Use
-### 1.1 Environment config
-Ubuntu20.04(recommend) or Ubunt18.04<br>
-[Install OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(OpenCV4 recommend)
+# 路径规划算法
+## 1. 如何使用
+### 1.1 环境配置
+Ubuntu20.04(建议) 或者 Ubunt18.04<br>
+[安装 OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(建议安装OpenCV4)
 
-### 1.2 Build program
+### 1.2 编译代码
 ```
 mkdir build
 cd build
@@ -12,16 +12,15 @@ cmake ..
 make -j10
 ./path_planning
 ```
-### 1.3 Supplementary Instruction
-The rightward direction is the positive direction of the X-axis<br>
-The downward direction is the positive direction of the Y-axis.
+### 1.3 补充说明
+向右为X轴正方向, 向下为Y轴正方向
 
-## 2. Taxonomy of motion planning techniques applied in automated driving scenarios
+## 2. 自动驾驶技术中路径规划算法的分类
 <table>
     <tr>
-        <td>Algorithm group</td>
-        <td width="200">Technique</td>
-        <td>Technique description</td>
+        <td>分类</td>
+        <td width="200">算法</td>
+        <td>说明</td>
     </tr>
     <tr>
         <td rowspan="3">Graph search based planners</td>
@@ -93,10 +92,10 @@ The downward direction is the positive direction of the Y-axis.
     </tr>
 </table>
 
-## 3. A* Algorithm
-### 3.1 pseudocode
-**Input**: A graph<br>
-**Output**: A path between start and goal nodes<br>
+## 3. A* 算法
+### 3.1 伪代码
+**输入**: 图数据结构<br>
+**输出**: 从起点到终点的一条路径<br>
 **repeat**<br>
 　Pick $n_{best}$ from $O$ such that $f(n_{best}) \leq f(n)$, $\forall n \in O$.<br>
 　Remove $n_{best}$ from $O$ and add to C.<br>
@@ -109,11 +108,11 @@ The downward direction is the positive direction of the Y-axis.
 　**end if**<br>
 **util** $O$ is empty.<br>
 
-### 3.2 pseudocode explain
-$O$ is a priority queue.<br>
-$C$ is a set of Node which has been processed.<br>
-Star($n$) represents the set of nodes which are adjacent to n.<br>
-$c(n_1, n_2)$ is the length of edge connecting $n_1$ and $n_2$.<br>
-$g(n)$ is the total length of a back pointer path from n to $q_{start}$.<br>
-$h(n)$ is the heuristic cost function, which returns the estimated cost of shortest path from $n$ to $q_{goal}$.<br>
-$f(n) = g(n) + h(n)$ is the estimated cost of shortest path from $q_{start}$ to $q_{goal}$ via $n$.<br>
+### 3.2 伪代码的进一步说明
+$O$ 是一个优先队列.<br>
+$C$ 存储已经处理好的节点.<br>
+Star($n$) 代表邻近n的所有节点.<br>
+$c(n_1, n_2)$ $n_1$和$n_2$之间边的长度.<br>
+$g(n)$ 从 n 到 $q_{start}$的路径总长度.<br>
+$h(n)$是启发式代价函数, 返回从 $n$ 到 $q_{goal}$理论上的最短距离(两点之间的直线).<br>
+$f(n) = g(n) + h(n)$ 从 $q_{start}$ 到 $q_{goal}$且通过$n$的最短距离估计.<br>
