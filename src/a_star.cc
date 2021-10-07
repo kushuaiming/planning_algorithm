@@ -25,46 +25,54 @@ void Star(Node* n, std::vector<Node*>& adjacent_nodes) {
   int32_t x = n->point().x, y = n->point().y;
   if (IsCoordinateValid(x, y - 1)) {
     Node* upper_node = map.mutable_node(x, y - 1);
-    *(upper_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // *(upper_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // upper_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_node);
   }
   if (IsCoordinateValid(x, y + 1)) {
     Node* down_node = map.mutable_node(x, y + 1);
-    *(down_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // *(down_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // down_node->set_pre_node(n);
     adjacent_nodes.push_back(down_node);
   }
   if (IsCoordinateValid(x - 1, y)) {
     Node* left_node = map.mutable_node(x - 1, y);
-    *(left_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // *(left_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // left_node->set_pre_node(n);
     adjacent_nodes.push_back(left_node);
   }
   if (IsCoordinateValid(x + 1, y)) {
     Node* right_node = map.mutable_node(x + 1, y);
-    *(right_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // *(right_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
+    // right_node->set_pre_node(n);
     adjacent_nodes.push_back(right_node);
   }
   if (IsCoordinateValid(x - 1, y - 1)) {
     Node* upper_left_node = map.mutable_node(x - 1, y - 1);
     // 1.4 is the square of 2.
-    *(upper_left_node->mutable_path_length_cost()) =
-        n->path_length_cost() + 1.4;
+    // *(upper_left_node->mutable_path_length_cost()) =
+    //     n->path_length_cost() + 1.4;
+    //     upper_left_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_left_node);
   }
   if (IsCoordinateValid(x + 1, y - 1)) {
     Node* upper_right_node = map.mutable_node(x + 1, y - 1);
-    *(upper_right_node->mutable_path_length_cost()) =
-        n->path_length_cost() + 1.4;
+    // *(upper_right_node->mutable_path_length_cost()) =
+    //     n->path_length_cost() + 1.4;
+    //     upper_right_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_right_node);
   }
   if (IsCoordinateValid(x - 1, y + 1)) {
     Node* down_left_node = map.mutable_node(x - 1, y + 1);
-    *(down_left_node->mutable_path_length_cost()) = n->path_length_cost() + 1.4;
+    // *(down_left_node->mutable_path_length_cost()) = n->path_length_cost()
+    // + 1.4; down_left_node->set_pre_node(n);
     adjacent_nodes.push_back(down_left_node);
   }
   if (IsCoordinateValid(x + 1, y + 1)) {
     Node* down_right_node = map.mutable_node(x + 1, y + 1);
-    *(down_right_node->mutable_path_length_cost()) =
-        n->path_length_cost() + 1.4;
+    // *(down_right_node->mutable_path_length_cost()) =
+    //     n->path_length_cost() + 1.4;
+    //     down_right_node->set_pre_node(n);
     adjacent_nodes.push_back(down_right_node);
   }
   return;
@@ -75,7 +83,7 @@ void CalculateHeuristicCost(Node* goal_node) {
     for (int j = 0; j < kMapDimensionY; ++j) {
       double heuristic_cost =
           std::hypot(i - goal_node->point().x, j - goal_node->point().y);
-      *(map.mutable_node(i, j)->mutable_heuristic_cost()) = heuristic_cost;
+      map.mutable_node(i, j)->set_heuristic_cost(heuristic_cost);
     }
   }
 }
@@ -97,9 +105,16 @@ void AddObstacles() {
   map.DrawObstacles();
 }
 
+double c(Node* n_best, Node* adjacent_node) {
+  double cost = 0.0;
+  cost += std::hypot(n_best->point().x - adjacent_node->point().x,
+                     n_best->point().y - adjacent_node->point().y);
+  return cost;
+}
+
 bool AStarAlgorithm() {
   Node* start_node = map.mutable_node(10, 40);
-  Node* goal_node = map.mutable_node(40, 10);
+  Node* goal_node = map.mutable_node(0, 0);
   map.DrawNode(*start_node, cv::Scalar(0, 0, 255));
   map.DrawNode(*goal_node, cv::Scalar(255, 0, 0));
 
@@ -109,7 +124,7 @@ bool AStarAlgorithm() {
 
   std::unordered_set<Node*> C;  // processed nodes
   auto compare = [](Node* lhs, Node* rhs) {
-    return lhs->total_cost() < rhs->total_cost();
+    return lhs->total_cost() > rhs->total_cost();
   };
   std::priority_queue<Node*, std::vector<Node*>, decltype(compare)> O(compare);
   O.push(start_node);
@@ -117,16 +132,21 @@ bool AStarAlgorithm() {
   while (!O.empty()) {
     // Pick nbest from O such that f(nbest) <= f(n).
     Node* n_best = O.top();
-    // Remove n_best from O and add to C(which mutable_node has been visited).
+    // Remove n_best from O and add to C.
     O.pop();
     C.insert(n_best);
     if (n_best == goal_node) break;
     std::vector<Node*> adjacent_nodes;
     Star(n_best, adjacent_nodes);
     for (Node* adjacent_node : adjacent_nodes) {
-      if (C.find(adjacent_node) != C.end() || adjacent_node->is_obstacle())
+      if (C.find(adjacent_node) != C.end() || adjacent_node->is_visited() ||
+          adjacent_node->is_obstacle())
         continue;
+      adjacent_node->set_path_length_cost(n_best->path_length_cost() +
+                                          c(n_best, adjacent_node));
+      adjacent_node->set_total_cost();
       O.push(adjacent_node);
+      adjacent_node->set_is_visited();
       adjacent_node->set_pre_node(n_best);
       map.DrawNode(*adjacent_node, cv::Scalar(0, 255, 0), 1);
       cv::imshow("a_star", map.background());

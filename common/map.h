@@ -25,23 +25,26 @@ class Node {
         path_length_cost_(0.0),
         heuristic_cost_(0.0),
         total_cost_(0.0),
-        is_obstacle_(false){};
+        is_obstacle_(false),
+        is_visited_(false){};
 
   const Point& point() { return point_; }
   const Node* pre_node() const { return pre_node_; }
   void set_pre_node(Node* pre_node) { pre_node_ = pre_node; }
 
-  double* mutable_path_length_cost() { return &path_length_cost_; }
-  double path_length_cost() { return path_length_cost_; }
-  double* mutable_heuristic_cost() { return &heuristic_cost_; };
-  double heuristic_cost() { return heuristic_cost_; };
-  double total_cost() {
-    total_cost_ = path_length_cost_ + heuristic_cost_;
-    return total_cost_;
+  double set_path_length_cost(double path_length_cost) {
+    return path_length_cost_ = path_length_cost;
   }
+  double path_length_cost() { return path_length_cost_; }
+  void set_heuristic_cost(double heuristic_cost) { heuristic_cost_ = heuristic_cost; }
+  double heuristic_cost() { return heuristic_cost_; }
+  void set_total_cost() { total_cost_ = path_length_cost_ + heuristic_cost_; }
+  double total_cost() { return total_cost_; }
 
-  void set_is_obstacle() { is_obstacle_ = true; };
-  bool is_obstacle() { return is_obstacle_; };
+  void set_is_visited() { is_visited_ = true; }
+  bool is_visited() { return is_visited_; }
+  void set_is_obstacle() { is_obstacle_ = true; }
+  bool is_obstacle() { return is_obstacle_; }
 
  private:
   Point point_;
@@ -52,6 +55,7 @@ class Node {
   double total_cost_;        // f(n) = g(n) + h(n)
 
   bool is_obstacle_;
+  bool is_visited_;
 };
 
 struct Obstacle {
