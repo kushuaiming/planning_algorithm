@@ -92,12 +92,7 @@ double c(Node* n_best, Node* adjacent_node) {
   return cost;
 }
 
-bool AStarAlgorithm() {
-  Node* start_node = map.mutable_node(10, 40);
-  Node* goal_node = map.mutable_node(0, 0);
-  map.DrawNode(*start_node, cv::Scalar(0, 0, 255));
-  map.DrawNode(*goal_node, cv::Scalar(255, 0, 0));
-
+bool AStarAlgorithm(Node* start_node, Node* goal_node) {
   CalculateHeuristicCost(goal_node);
 
   AddObstacles();
@@ -134,19 +129,26 @@ bool AStarAlgorithm() {
     }
   }
 
-  const Node* path_node = goal_node;
+  return true;
+}
+
+void DrawPath(Node* start_node, Node* goal_node) {
+  const Node* path_node = goal_node->pre_node();
   while (path_node != start_node) {
     map.DrawNode(*path_node, cv::Scalar(0, 0, 0));
     path_node = path_node->pre_node();
     cv::imshow("a_star", map.background());
     cv::waitKey(5);
   }
-
-  return true;
 }
 
 int main(int argc, char* argv[]) {
-  AStarAlgorithm();
+  Node* start_node = map.mutable_node(10, 40);
+  Node* goal_node = map.mutable_node(0, 0);
+  map.DrawNode(*start_node, cv::Scalar(0, 0, 255));
+  map.DrawNode(*goal_node, cv::Scalar(255, 0, 0));
+  AStarAlgorithm(start_node, goal_node);
+  DrawPath(start_node, goal_node);
   cv::imshow("a_star", map.background());
   cv::waitKey();
   return -1;
