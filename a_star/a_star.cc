@@ -135,7 +135,7 @@ bool AStarAlgorithm(Node* start_node, Node* goal_node) {
 void DrawPath(Node* start_node, Node* goal_node) {
   const Node* path_node = goal_node->pre_node();
   while (path_node != start_node) {
-    map.DrawNode(*path_node, cv::Scalar(0, 0, 0));
+    map.DrawNode(*path_node, cv::Scalar(128, 128, 128));
     path_node = path_node->pre_node();
     cv::imshow("a_star", map.background());
     cv::waitKey(5);

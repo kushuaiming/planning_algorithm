@@ -3,7 +3,7 @@ project(path_planning)
 
 set(SOURCE
     common/map.cc
-    src/a_star.cc
+    a_star/a_star.cc
 )
 
 add_executable(path_planning ${SOURCE})
