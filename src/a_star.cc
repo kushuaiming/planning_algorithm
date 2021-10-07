@@ -25,54 +25,34 @@ void Star(Node* n, std::vector<Node*>& adjacent_nodes) {
   int32_t x = n->point().x, y = n->point().y;
   if (IsCoordinateValid(x, y - 1)) {
     Node* upper_node = map.mutable_node(x, y - 1);
-    // *(upper_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
-    // upper_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_node);
   }
   if (IsCoordinateValid(x, y + 1)) {
     Node* down_node = map.mutable_node(x, y + 1);
-    // *(down_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
-    // down_node->set_pre_node(n);
     adjacent_nodes.push_back(down_node);
   }
   if (IsCoordinateValid(x - 1, y)) {
     Node* left_node = map.mutable_node(x - 1, y);
-    // *(left_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
-    // left_node->set_pre_node(n);
     adjacent_nodes.push_back(left_node);
   }
   if (IsCoordinateValid(x + 1, y)) {
     Node* right_node = map.mutable_node(x + 1, y);
-    // *(right_node->mutable_path_length_cost()) = n->path_length_cost() + 1;
-    // right_node->set_pre_node(n);
     adjacent_nodes.push_back(right_node);
   }
   if (IsCoordinateValid(x - 1, y - 1)) {
     Node* upper_left_node = map.mutable_node(x - 1, y - 1);
-    // 1.4 is the square of 2.
-    // *(upper_left_node->mutable_path_length_cost()) =
-    //     n->path_length_cost() + 1.4;
-    //     upper_left_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_left_node);
   }
   if (IsCoordinateValid(x + 1, y - 1)) {
     Node* upper_right_node = map.mutable_node(x + 1, y - 1);
-    // *(upper_right_node->mutable_path_length_cost()) =
-    //     n->path_length_cost() + 1.4;
-    //     upper_right_node->set_pre_node(n);
     adjacent_nodes.push_back(upper_right_node);
   }
   if (IsCoordinateValid(x - 1, y + 1)) {
     Node* down_left_node = map.mutable_node(x - 1, y + 1);
-    // *(down_left_node->mutable_path_length_cost()) = n->path_length_cost()
-    // + 1.4; down_left_node->set_pre_node(n);
     adjacent_nodes.push_back(down_left_node);
   }
   if (IsCoordinateValid(x + 1, y + 1)) {
     Node* down_right_node = map.mutable_node(x + 1, y + 1);
-    // *(down_right_node->mutable_path_length_cost()) =
-    //     n->path_length_cost() + 1.4;
-    //     down_right_node->set_pre_node(n);
     adjacent_nodes.push_back(down_right_node);
   }
   return;
