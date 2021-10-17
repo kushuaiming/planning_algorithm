@@ -1,8 +1,9 @@
 # 路径规划算法
 ## 1. 如何使用
 ### 1.1 环境配置
-Ubuntu20.04(建议) 或者 Ubunt18.04<br>
-[安装 OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(建议安装OpenCV4)
+[Ubuntu20.04](https://ubuntu.com/)(建议) 或者 Ubunt18.04<br>
+[CMake](https://cmake.org/)<br>
+[OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(建议安装OpenCV4)
 
 ### 1.2 编译代码
 ```
@@ -23,71 +24,67 @@ make -j10
         <td>说明</td>
     </tr>
     <tr>
-        <td rowspan="3">Graph search based planners</td>
-        <td>Dijkstra's Algorithm</td>
+        <td rowspan="3">基于图搜索的算法</td>
+        <td>Dijkstra算法</td>
         <td>
-            Known nodes/cells search space with associated weights<br/>
-            Grid and node/cells weights computation according to the environment
+            已知带有权重的节点搜索空间<br/>
+            节点的权重和周围的环境有关
         </td>
     </tr>
     <tr>
-        <td>A* algorithm family</td>
+        <td>A*算法</td>
         <td>
-            Anytime D* with Voronoi cost functions Hybrid-heuristics A*<br/>
-            A* with Voronoi/Lattice enviroment represeantation. PAO*
+            A*在Dijkstra算法的基础上增加了启发式代价函数<br/>
         </td>
     </tr>
     <tr>
-        <td>State Lattices</td>
+        <td>Lattices</td>
         <td>
-            Enviroment decomposed in a local variable grid, depending on the complexity of the maneuver<br/>
-            Spatio-temporal lattices(considering time adn velocity dimensions)
+            根据环境的复杂性不同, 将其建模到本地的离散化网格中<br/>
+            时间-空间lattice, 考虑时间和速度两个维度
         </td>
     </tr>
     <tr>
-        <td>Sampling based planners</td>
+        <td>基于取样的算法</td>
         <td>RRT</td>
         <td>
-            Physical and logical bias are used to generate the random-tree<br/>
-            Anytime planning with RRT*<br/>
-            Trajectory coordination with RRT
+            用物理和逻辑上的偏差来生成随即搜索树<br/>
         </td>
     </tr>
     <tr>
-        <td rowspan="5">Interpolating curve planners</td>
-        <td>Line ad circle</td>
-        <td>Road fitting and interpolation of known waypoints</td>
+        <td rowspan="5">曲线插值</td>
+        <td>直线和圆</td>
+        <td>利用已知的点进行插值形成路径</td>
     </tr>
     <tr>
-        <td>Clothoid Curves</td>
+        <td>回旋线</td>
         <td>
-            Piecewise trajectory generation with straight, clothoid and circular segments<br/>
-            Off-line generation of clothoid primitives from which the best will be taken in on-line evaluation
+            利用直线、螺旋曲线、圆弧等分段组成轨迹<br/>
+            离线生成原始曲线然后放到线上进行评估
         </td>
     </tr>
     <tr>
-        <td>Polynomial Curves</td>
+        <td>多项式曲线</td>
         <td>
-            Cubic order polynomial curves<br/>
-            Higher order polynomial curves
+            三阶多项式曲线<br/>
         </td>
     </tr>
     <tr>
-        <td>Bezier Curves</td>
+        <td>贝塞尔曲线</td>
         <td>
-            Selection of the optimal control points location for the situation in hand<br/>
-            Rational Bezier curves impletation
+            为现有的情况选择最佳的控制点<br/>
+            有理贝塞尔曲线的实现
         </td>
     </tr>
     <tr>
-        <td>Spline Curves</td>
-        <td>Polynomial piecewise implementation Basis splines(b-splines)</td>
+        <td>样条曲线</td>
+        <td>分段的多项式函数组成样条曲线</td>
     </tr>
     <tr>
-        <td>Numerical optimization approaches</td>
-        <td>Function optimization</td>
+        <td>数值优化</td>
+        <td>函数优化</td>
         <td>
-            Trajectory generation optimizing parameters such as speed, steering speed, rollover constraints, lateral accelerations, jerk(lateral comort optimization), among others
+            优化生成的轨迹的参数(比如速度、转向速度、滚动约束、侧向加速度、Jerk(速度的导数, 表示舒适性)等等)<br/>
         </td>
     </tr>
 </table>

@@ -1,8 +1,9 @@
 # Planning Algorithm
 ## 1. How to Use
 ### 1.1 Environment config
-Ubuntu20.04(recommend) or Ubunt18.04<br>
-[Install OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(OpenCV4 recommend)
+[Ubuntu20.04](https://ubuntu.com/)(recommend) or Ubunt18.04<br>
+[CMake](https://cmake.org/)<br>
+[OpenCV](https://docs.opencv.org/4.5.3/d7/d9f/tutorial_linux_install.html)(OpenCV4 recommend)
 
 ### 1.2 Build program
 ```
@@ -42,7 +43,7 @@ The downward direction is the positive direction of the Y-axis.
         <td>State Lattices</td>
         <td>
             Enviroment decomposed in a local variable grid, depending on the complexity of the maneuver<br/>
-            Spatio-temporal lattices(considering time adn velocity dimensions)
+            Spatio-temporal lattices(considering time and velocity dimensions)
         </td>
     </tr>
     <tr>
@@ -56,7 +57,7 @@ The downward direction is the positive direction of the Y-axis.
     </tr>
     <tr>
         <td rowspan="5">Interpolating curve planners</td>
-        <td>Line ad circle</td>
+        <td>Line and circle</td>
         <td>Road fitting and interpolation of known waypoints</td>
     </tr>
     <tr>
