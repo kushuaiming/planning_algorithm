@@ -43,8 +43,8 @@ class RRT {
         area_gen_(area_rd_()),
         area_dis_(std::uniform_real_distribution<double>(0, 15)) {}
   Node* GetNearestNode(const std::vector<double>& random_position);
-  bool collisionCheck(Node*);
-  std::vector<Node*> planning();
+  bool CollisionCheck(Node*);
+  std::vector<Node*> Planning();
 
  private:
   Node* start_node_;
