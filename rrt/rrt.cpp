@@ -114,3 +114,16 @@ std::vector<Node*> RRT::Planning() {
   path.push_back(start_node_);
   return path;
 }
+
+int main(int argc, char* argv[]) {
+  // (x, y, r)
+  std::vector<std::vector<double>> obstacle_list{{7, 5, 1},  {5, 6, 2}, {5, 8, 2},
+                                     {5, 10, 2}, {9, 5, 2}, {11, 5, 2}};
+
+  Node* start_node = new Node(2.0, 2.0);
+  Node* goal_node = new Node(14.0, 9.0);
+
+  RRT rrt(start_node, goal_node, obstacle_list, 0.5, 5);
+  rrt.Planning();
+  return 0;
+}
