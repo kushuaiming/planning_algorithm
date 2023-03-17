@@ -95,17 +95,17 @@ std::vector<Node*> RRT::planning() {
 
   std::vector<Node*> path;
   path.push_back(goal_node_);
-  Node* tmpNode = node_list_.back();
-  while (tmpNode->parent() != nullptr) {
+  Node* tmp_node = node_list_.back();
+  while (tmp_node->parent() != nullptr) {
     line(background,
-         cv::Point(static_cast<int>(tmpNode->point().x * kImageResolution),
-                   static_cast<int>(tmpNode->point().y * kImageResolution)),
+         cv::Point(static_cast<int>(tmp_node->point().x * kImageResolution),
+                   static_cast<int>(tmp_node->point().y * kImageResolution)),
          cv::Point(
-             static_cast<int>(tmpNode->parent()->point().x * kImageResolution),
-             static_cast<int>(tmpNode->parent()->point().y * kImageResolution)),
+             static_cast<int>(tmp_node->parent()->point().x * kImageResolution),
+             static_cast<int>(tmp_node->parent()->point().y * kImageResolution)),
          cv::Scalar(255, 0, 255), 10);
-    path.push_back(tmpNode);
-    tmpNode = tmpNode->parent();
+    path.push_back(tmp_node);
+    tmp_node = tmp_node->parent();
   }
 
   imshow("RRT", background);
