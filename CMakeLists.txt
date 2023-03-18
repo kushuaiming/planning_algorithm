@@ -17,3 +17,6 @@ target_include_directories(a_star
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/common
 )
+
+add_executable(rrt rrt/rrt.cc)
+target_link_libraries(rrt ${OpenCV_LIBS})

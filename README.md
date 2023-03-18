@@ -11,7 +11,8 @@ mkdir build
 cd build
 cmake ..
 make -j10
-./path_planning
+./a_star
+./rrt
 ```
 ### 1.3 Supplementary Instruction
 The rightward direction is the positive direction of the X-axis<br>

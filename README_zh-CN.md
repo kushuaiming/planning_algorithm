@@ -11,7 +11,8 @@ mkdir build
 cd build
 cmake ..
 make -j10
-./path_planning
+./a_star
+./rrt
 ```
 ### 1.3 补充说明
 向右为X轴正方向, 向下为Y轴正方向
