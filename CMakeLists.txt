@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.10)
-project(path_planning)
+project(planning_algorithms)
 
-set(SOURCE
+set(ASTAR
     common/map.cc
     a_star/a_star.cc
 )
 
-add_executable(path_planning ${SOURCE})
+add_executable(a_star ${ASTAR})
 
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIBRARY_DIRS})
-target_link_libraries(path_planning ${OpenCV_LIBS})
+target_link_libraries(a_star ${OpenCV_LIBS})
 
-target_include_directories(path_planning
+target_include_directories(a_star
     PRIVATE 
         ${PROJECT_SOURCE_DIR}/common
 )
